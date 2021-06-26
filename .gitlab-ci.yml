@@ -11,7 +11,7 @@ cache:
 package:
   stage: build
   script:
-    - ./gradlew assemble
+    - ./gradlew assemble -Pomdb_api_key="$omdb_api_key"
 
 test:
   stage: test
