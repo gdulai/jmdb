@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+    id 'maven'
+    id 'maven-publish'
+}
+
+group 'hu.gdulai'
+version '1.0'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    if (project.hasProperty("android")) {
+        compileOnly group: 'com.google.guava', name: 'guava', version: '27.1-android'
+    } else {
+        compileOnly group: 'com.google.guava', name: 'guava', version: '27.1-jre'
+    }
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'hu.gdulai'
+            artifactId = 'jmdb'
+            version = '1.0'
+
+            from components.java
+        }
+    }
+}
+
+test {
+    systemProperties['omdb_api_key'] = omdb_api_key
+}
